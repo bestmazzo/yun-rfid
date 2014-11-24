@@ -1,6 +1,6 @@
 #Yun-RFID
 
-An Arduino Yun project for reading RFID tags and doing things - all wrapped in [MQTT]!
+An Arduino Yun project for reading RFID tags and doing things - all wrapped in [MQTT][MQTT]!
 
 #ABOUT
 
@@ -23,6 +23,7 @@ Software architecture is based on MQTT protocol.
 [mosquitto]: http://www.mosquitto.org
 [mosquitto bridge 1]: https://github.com/owntracks/owntracks/wiki/Bridge
 [mosquitto bridge 2]: http://jpmens.net/2013/02/25/lots-of-messages-mqtt-pub-sub-and-the-mosquitto-broker/
+[MQTT]: http://mqtt.org
 
 #USAGE
 TODO
