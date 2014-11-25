@@ -4,7 +4,7 @@ An Arduino Yun project for reading RFID tags and doing things - all wrapped in [
 
 #ABOUT
 
-This project is about creating a little and hopefully not so shortsighted DIY solution fir readin RFID tags with a Arduino and manage subsequent actions. The aim is to create a standalone solution that could be easily integrated in a wider environment, thus allowing end-user to quickly make it work while letting developers extending it with almost no extra effort.
+This project is about creating a little and hopefully not so shortsighted DIY solution for reading RFID tags with a Arduino and manage subsequent actions. The aim is to create a standalone solution that could be easily integrated in a wider environment, thus allowing end-user to quickly make it work almost out-of-the-box, while letting developers extending it with a little extra effort.
 
 Every code review, suggestion and reuse of current code is welcome!
 
