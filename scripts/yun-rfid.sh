@@ -4,6 +4,13 @@ UCI="uci -q"
 DEFCHANNEL="/it/bestmazzo/yun/rfid"
 CHANNEL=`$UCI get rfid.default.inchannel`
 
+getAction(){
+	TMP=`$UCI get $1`
+	echo "TMP: $TMP"
+	ACTIONS=`$UCI get rfid.$TMP.actions -d ' ; '`
+	echo "ACTIONS: $ACTIONS"
+        $ACTIONS > /dev/null
+}
 #FUNCTION TO CALL ON MESSAGE RECEPTION
 gotrfid(){
 
@@ -15,15 +22,11 @@ gotrfid(){
 			echo "Adding new ID $1"
 			$UCI set rfid.$1=rfid
 	              # CALL ADD ACTION
-                        ONADD=`$UCI get rfid.default.onadd -d ' ; '`
-			echo "ADD ACTIONS: $ONADD"
-                        $ONADD > /dev/null
+                        getAction rfid.default.onadd
 		else
 			echo "ID $1 is not registered and autolearn is off"
 		      # CALL ERROR ACTION
-			ONERROR=`$UCI get rfid.default.onerror -d ' ; '`
-			echo "ERROR ACTIONS: $ONERROR"
-			$ONERROR > /dev/null
+			getAction rfid.default.onerror
 			return
 		fi
 		
@@ -32,9 +35,18 @@ gotrfid(){
 #	CHECK RFID STATUS (IN/OUT/..)
 	SYSMODE=`$UCI get rfid.default.sysmode`
 	RFID=$1
-	if [ $SYSMODE = "GLOBAL" ]; then
+
+	case $SYSMODE in
+        "GLOBAL")
 		RFID="default"
-	fi
+		;;
+	"SINGLE")
+		RFID=$1
+		;;
+	"HYBRID")
+		;;
+	esac
+
 	STATUS=`$UCI get rfid.$RFID.status`
       # echo "$1 -> $STATUS"
 
@@ -44,14 +56,10 @@ gotrfid(){
 		NEWSTATUS=out
 	fi
 	$UCI set rfid.$RFID.status=$NEWSTATUS
-	
-	echo "$TMPID -> $NEWSTATUS"
+	echo "$RFID -> $NEWSTATUS"
 
 #       EXECUTE ACTIONS
-        ACTIONS=`$UCI get rfid.$RFID.$NEWSTATUS -d ' ; '`
-        echo "$? Executing $ACTIONS"
-        $ACTIONS > /dev/null
-
+        getAction rfid.$RFID.$NEWSTATUS
 }
 
 # READ MQTT CHANNEL
